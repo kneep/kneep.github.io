@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="DIE0Wlh-SLTFUNEkZ2BUjfEAZfxmZfUeK7VOM49zUJs">
+  <meta name="msvalidate.01" content="4B5475EE8FD1E0C893130B4C3973FAC7">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kneep.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="原子性和原子操作计算机操作最重要的构成单位是原子操作。这里的原子跟物理上说的原子没有任何关系，而是起源于单词atom，也就是希腊语“ἄτομος”（意为不可见的）。原子操作是一种不可再细分的操作，或者在系统中其他处理器看来是不可再分了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原子操作和竞争">
+<meta property="og:url" content="https://kneep.github.io/2017/08/15/atomics-and-contention/index.html">
+<meta property="og:site_name" content="尼普学种花">
+<meta property="og:description" content="原子性和原子操作计算机操作最重要的构成单位是原子操作。这里的原子跟物理上说的原子没有任何关系，而是起源于单词atom，也就是希腊语“ἄτομος”（意为不可见的）。原子操作是一种不可再细分的操作，或者在系统中其他处理器看来是不可再分了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-08-15T15:09:56.000Z">
+<meta property="article:modified_time" content="2020-05-06T14:50:31.820Z">
+<meta property="article:author" content="Alvin Cao">
+<meta property="article:tag" content="译文">
+<meta property="article:tag" content="计算机原理">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://kneep.github.io/2017/08/15/atomics-and-contention/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>原子操作和竞争 | 尼普学种花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">尼普学种花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kneep.github.io/2017/08/15/atomics-and-contention/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alvin Cao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="尼普学种花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          原子操作和竞争
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-08-15 23:09:56" itemprop="dateCreated datePublished" datetime="2017-08-15T23:09:56+08:00">2017-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-06 22:50:31" itemprop="dateModified" datetime="2020-05-06T22:50:31+08:00">2020-05-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="原子性和原子操作"><a href="#原子性和原子操作" class="headerlink" title="原子性和原子操作"></a>原子性和原子操作</h1><p>计算机操作最重要的构成单位是原子操作。这里的原子跟物理上说的原子没有任何关系，而是起源于单词atom，也就是希腊语“ἄτομος”（意为不可见的）。原子操作是一种不可再细分的操作，或者在系统中其他处理器看来是不可再分了。<a id="more"></a>为了说明为什么原子操作很重要，考虑两个处理器以几乎相同的方式增加一个计数器，翻译成C语言就是<code>counter++</code>，此时会发生什么：</p>
+<table>
+<thead>
+<tr>
+<th>指令周期</th>
+<th>处理器一</th>
+<th>处理器二</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>reg = load(&amp;counter);</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>reg = reg + 1;</td>
+<td>reg = load(&amp;counter);</td>
+</tr>
+<tr>
+<td>2</td>
+<td>store(&amp;counter, reg);</td>
+<td>reg = reg + 1;</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td>store(&amp;counter, reg);</td>
+</tr>
+</tbody></table>
+<p>在编译好的代码中，这样一个操作分为：读操作、寄存器自加，最后是一个写操作（这里用类似C语言的伪代码表示）。这三个步骤是独立且按顺序执行的（注意，对于x86来说，在更微观的架构层次上这句话是正确的，但是在指令集架构的层次上，这三步看起来可以用一条“读-修改-写（read-modify-write）”指令完成：<code>add [memory], value</code>）。并且因为这些操作被分成多个指令周期来执行，所以在处理器一读完<code>counter</code>（并且正开始把它加一）之后，把结果写回去之前的空隙，处理器二也有可能去读它。结果导致虽然两个处理器都去增加这个计数器，但最终计数器的值只被加了1，其中一个加法运算“丢失”了。</p>
+<p>原子操作恰恰就是用来防止这个问题的。如果我们使用一个原子的自加操作（说得更通用一点，原子加法）而不是常规的自加操作，执行指令的处理器会确保上面的三个步骤（读、加、写）像一条指令那样完成，成为一个原子操作。在自加操作进行的时候，其他处理器无法插手。</p>
+<h1 id="原子操作是如何实现的"><a href="#原子操作是如何实现的" class="headerlink" title="原子操作是如何实现的"></a>原子操作是如何实现的</h1><p>现在问题来了，原子操作是如何实现的呢？从理论上来说，最简单的方法就是加锁：在任何时间点上，只有一个处理器被允许执行一个原子操作。这个处理器在做原子操作之前，必须先获得锁，并且在操作完成后释放它。这就是x86的<code>LOCK</code>前缀的作用（大致如此；这里我略去了细节）。这里，获得锁的操作意味着向总线发送一条消息，说“好吧，我要占用总线一会儿，大家都退后”（根据我们的目的，这就意味着“请不要再做内存操作了”）。然后发出请求的处理器要先等其他处理器完成它们正在进行的内存操作，之后才会得到确认。只有等到其他所有处理器都确认了以后，请求锁的处理器才能开始处理内存操作。最后，一旦锁被释放，它还需要发送一条信息给总线上的其他处理器“我的工作完成，你们可以继续向总线发送请求了”。</p>
+<p>这种做法没有问题，但是慢得_无法想象_。x86处理器依然保留了这种方式（或者类似做法），但只有当绝对紧急的情况下才会使用，也就是其他所有方法都失败时的最后一招。x86指令集架构需要这么一个办法来兜底，因为他们为了向后兼容，允许一些非常不可靠的操作，比如跨多个缓存段（cache line）的非对齐的原子操作。其他体系架构不允许对非对齐的数据进行原子操作，也不允许对“太大”的数据进行原子操作。这些限制确保了单个原子操作只会发生在单个缓存段中。并且一旦有了这个前提，我们讨论起来就方便了：上次讨论缓存一致性协议的时候我们看到，处理器之间对于同步内存的交互是以缓存段为单位的，所以原则上我们可以对单个缓存段做复杂的修改，然后通过刷新缓存段内容来把修改公之于众。而且，MESI协议状态机有两个状态（M和E，代表“已修改”和“独占”）可以保证一个缓存段被处理器独占——当一个缓存段被独占时，其他处理器无法“窥探”。我们可以用这种机制来替代加锁协议。</p>
+<p>所以结论是这样的：在一个使用MESI（或其衍生协议）的系统中，我们为了确保针对单个缓存段的操作具有原子性，只需要做到：一、保证在正确的地方摆放内存屏障（memory barrier），使内存操作和周边的代码保持正确的执行顺序（见上一篇的文章），二、在读任何东西前先获得缓存段的所有权，三、只有当我们在整个原子操作期间一直握有独占权，才可以把操作的结果回写。这可以确保没有其他处理器能看到只完成了一半的数据。要完成第三点有好几种方法，比如我们可以开发出这样的硬件，让它可以在单个总线时钟周期内完成某些原子操作；如果我们从一个时钟周期开始的时候拥有某个缓存段的独占权，那么直到这个周期结束，我们都可以修改数据。因为一个缓存段不可能在一个时钟周期内“易手”，这样的操作是很快的。根据总线协议，我们也可以玩点花样，一致性请求可以立即响应，但如果我们正在做原子操作，真正的数据可以稍晚发送。最后，我们也可以选择根本不作弊，而是直接实现二和三：把所有正在进行原子操作的缓存段“监控”起来，在原子操作完成前，如果有其他处理器请求这个缓存段，那我们的原子操作要从头再来。因为这个原因，大多数RISC处理器都有<a href="http://en.wikipedia.org/wiki/Load-link/store-conditional" target="_blank" rel="noopener">load-link/store-conditional（LL/SC）</a>指令。</p>
+<p>顺便说一下，从总线侧（以及其他处理器通过总线）看来，正确对齐的原子操作和普通的内存更新没有什么区别。所有的工作都在处理器内部完成，其他处理器既不知道也不关心某次内存更新到底是通过原子性的比较并交换（compare-and-swap）操作加上内存屏障来完成的，还是通过一次随意写指令完成的。</p>
+<p>这一切听起来简单而美好，至少理论上是，但魔鬼往往藏于细节中。坏消息是，如果你是一个CPU架构师，这个过程的每个细节对你来说都关系重大；你对内存操作的内部实现需要避免“饥饿”（每个想获取缓存段独占权的处理器，最终都能获得它，无论其他处理器在做什么），并且确保基本的原子操作的实现不能导致死锁或活锁。这听起来是显而易见的，但是对低层次的原语（比如原子操作、LL/SC指令）来说，这种保证不是与生俱来的。这东西实现起来挺困难的，并且CPU不但要保证有正确的实现，还要保证这种实现在“典型场景”下足够快。当然，好消息是如果你工作的公司不是设计CPU的，以上这些都不关你的事。肯定已经有人通盘考虑过这些问题，并且他们背后有一支强大的验证工程师队伍拼命地在找这些实现的纰漏。</p>
+<h1 id="内存操作的开销"><a href="#内存操作的开销" class="headerlink" title="内存操作的开销"></a>内存操作的开销</h1><p>回到软件上，假设我们工作在一种典型的CPU体系结构上，并且在多核系统中运行代码。在这种环境下，一次内存操作的开销到底是什么？这将分为几个部分：<br><strong>执行。</strong>执行一次内存操作是有开销的。现在假设我们只有一个处理器核在工作，并且正在运行单线程的代码。即便如此，内存访问还是很复杂。跟程序打交道的是虚拟地址，但是缓存和内存总线看到的却是物理地址。所以任何内存操作首先做的就是把虚拟地址转换成物理地址，这些结果本身会保存在页表缓存中（Translation Lookaside Buffer，简称TLB）。如果你运气不好，你所要访问的虚拟地址当前可能并没有映射到物理地址，并且它的内容需要从虚拟内存中载入。当这个情况发生时，操作系统会调度别的线程到当前的处理器上运行一段时间，因为从处理器看来，IO操作需要花很长时间。但是我们先假设这种情况不会发生。</p>
+<p>所以，一切都很顺利的话，内存操作到底能跑多快？看起来非常快。通常每个时钟周期至少可以完成一次操作（读/写），很有可能更多。在3GHz单核处理器上，能高效利用缓存的代码每秒钟可以完成十亿次数量级的内存操作。</p>
+<p><strong>内存屏障和原子性的“读-修改-写”操作。</strong>下一步，假设我们的代码是多线程的，但我们还是在单核上运行它。这里我们就可以看到内存屏障和原子操作了，但是没有来自其他处理器的干扰。我们简单假设所有需要的缓存段已经被我们的处理器独占了。在这种情况下，使用一次原子的整数加法来更新内存中的一个引用计数器，代价到底有多大？</p>
+<p>好吧，这其实取决于处理器架构的实现。一般来说，对于带有激进的内存重排序（memory reordering）策略的微架构处理器来说，使用内存屏障和原子操作的开销更大，而只支持轻度重排序或者顺序执行（in-order）内存操作的处理器则好一点。比如，在 Intel Atom处理器（顺序执行）上使用<code>LOCK INC [mem]</code>来增加引用计数器值的开销，本质上和使用常规<code>INC [mem]</code>指令是一样的。而更复杂的内存操作，如“交换（exchange）”和“交换-加(exchange-add)”花费的时间是基础的“读-修改-写”操作的两到三倍。相反，在Intel和AMD支持乱序执行（out-of-order）的桌面处理器产品线中，一次原子自加操作的开销是非原子版本的十到二十五倍，这些开销是保证正确的执行顺序所带来的。再一次重申：这仅是在单核上运行的代码，还没有涉及处理器间通讯的开销。为了使代码在多核系统上安全地运行，还会在单个处理器内引入额外的开销。</p>
+<p><strong>总线流量（bus traffic）和缓存一致性（cache coherency）。</strong>部分内存访问操作实际上会无法命中缓存，从而只能从内存中加载。一旦有些缓存段因为长时间无人访问而被丢弃，我们就要开始把它的内容回写（write-back）到内存中。所有这些事件都会导致总线上（以及内存中）发生通讯流量。而总线和内存的带宽是有限的，当容量饱和时，系统就变慢了。</p>
+<p>而且，一旦我们在多核系统中运行多线程程序，总线上就会产生额外的通讯流量来保证缓存一致性，因为各个处理器都会不断地同步它们所看到的内存内容。如果每个线程都在自己独立的内存空间里工作，那么这种流量不会很大。如果每块内存只会被一个处理器使用，那么根本无需同步，而且我们可以很容易获取这些内存对应的缓存段的独占权，不会引起其他处理器上的缓存段失效。</p>
+<p>相反，如果两个或多个处理器频繁地访问相同的缓存段，那么这些缓存段的内容必须保持同步。如果想更新其中一个缓存段的内容，必须先获得独占权，这意味着其他所有处理器必须先丢弃它们缓存中的同一缓存段的拷贝。这带来的结果是，下一次有另外一个处理器要访问这个缓存段，它的内容必须先通过总线来加载。所以结果就是缓存失效率（对于其他处理器来说）和总线上额外的通讯流量都增加了。这种多个处理器访问一个频繁被更新的缓存段的现象，叫做“缓存（段）竞争”。如果你想在多个处理器共用内存的环境中拖慢一个并行的程序，这也许是最简单的方法。</p>
+<h3 id="缓存段竞争"><a href="#缓存段竞争" class="headerlink" title="缓存段竞争"></a>缓存段竞争</h3><p>要产生缓存段竞争，我们需要多个处理器频繁访问同一缓存段，并且其中部分的访问是写操作。私有数据（只会被一个线程访问的缓存段）从来不是问题。不变的（immutable）数据（只被写一次，其后到生命期结束都不会被修改）也不是问题。麻烦的是那些既被线程共享，又可变的数据：处理这些数据需要大量的通讯工作来使各个处理器看到的内存内容保持一致（根据内存模型的限制）。这种通讯代价很大——并且随着处理器数量的增多，开销会越来越大。</p>
+<p>那么我们谈论的开销到底有多大？几个星期前我<a href="https://github.com/rygorous/atomic_ops_test" target="_blank" rel="noopener">写了一个测试程序</a>（针对x86/Windows）。这个测试程序用起来肯定是不方便的，也不好理解，它假设运行在四核处理器多线程环境，或者至少拥有八个逻辑处理器的类似环境下。它的要点是：上面已经解释过，把一个“读-修改-写”模式的加法操作替换为原子加法操作，将产生十到二十五倍的开销（精确数值取决于具体的微架构）。如果你需要一个经验值，算十倍就可以了（对于<a href="http://en.wikipedia.org/wiki/Fermi_problem" target="_blank" rel="noopener">费米估算</a>来说已经足够了）。</p>
+<p>一旦有第二个处理器在读同一个缓存段，开销就会暴增。如果第二个处理器在快速循环中不停地读取这个缓存段，那么原子加法的开销会更大——大得多：典型的，增加四到六倍（这可是在我们使用原子加法而产生十倍开销的基础上再次翻倍！）。同时读取这个缓存段的处理器越多，开销就越大，而如果同时还有处理器在写这个缓存段，那么效果更甚。但是请不要把这个数据当作金科玉律，这只是人写的基准测试程序而已，它并不做任何实质性工作。为保证缓存一致性而产生的真正开销跟具体的上下文有很大关系。在这里我想做的只是让你对保证缓存一致性而产生的开销有一个粗略的直观感受（即：它是无法忽略不计的）。</p>
+<p>其中有一些通讯流量是不必要的。比如，由于缓存一致性的最小颗粒度是段，很多不必要的同步开销是可以简化的，因为不同类型的数据——不可变的、私有的和共享的——在同一缓存段中交错分布（或者类似地，因为一个缓存段中只保存了多个线程各自的私有数据）。这种现象叫做“<a href="http://en.wikipedia.org/wiki/False_sharing" target="_blank" rel="noopener">假共享</a>”。幸运的是，这种问题可以简单通过性能评估程序来定位，通过重新组织内存数据（可能通过填充的方式，确保不同类型的数据不放在同一缓存段）的方法，可以相对直接地修复它，或者直接移除一些捣乱的数据。我的旧文“<a href="https://fgiesen.wordpress.com/2013/01/31/cores-dont-like-to-share/" target="_blank" rel="noopener">处理器不喜欢共享</a>”中给出了一个例子。</p>
+<p>经此过滤下来的就是真正的竞争了——竞争访问共享数据。这包括了真正共享的可变数据结构，以及某些元数据（metadata），比如锁和其他同步对象。准确地说，这种竞争运行得有多流畅，取决于数据在内存中的具体布局，以及使用什么操作来访问它。</p>
+<p>一般来说，要写出在多核处理器上具有良好可伸缩性（scalable）的代码，方法就是尽可能避免竞争，如果不能避免，则使所有竞争都尽可能快速通过。完善地考虑竞争问题，理解缓存一致性的工作原理（至少要大致上），理解处理器为了保证缓存一致性而需要交换什么信息，理解这种通讯何时会发生，这是非常重要的。我们讲完了这些基础知识，现在可以看看更上层的软件了。</p>
+<p><em>本文是RAD Game Tools程序员Fabian “ryg”  Giesen在其博客上发表的《Atomic operations and contention》一文的翻译。原文地址：<a href="https://fgiesen.wordpress.com/2014/08/18/atomics-and-contention/" target="_blank" rel="noopener">https://fgiesen.wordpress.com/2014/08/18/atomics-and-contention/</a></em></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Alvin Cao
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://kneep.github.io/2017/08/15/atomics-and-contention/" title="原子操作和竞争">https://kneep.github.io/2017/08/15/atomics-and-contention/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%91%E6%96%87/" rel="tag"># 译文</a>
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" rel="tag"># 计算机原理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/08/15/cache-coherency/" rel="prev" title="缓存一致性（Cache Coherency）入门">
+      <i class="fa fa-chevron-left"></i> 缓存一致性（Cache Coherency）入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/08/15/linus-ted/" rel="next" title="Linus Torvalds：Linux背后的智者">
+      Linus Torvalds：Linux背后的智者 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原子性和原子操作"><span class="nav-number">1.</span> <span class="nav-text">原子性和原子操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原子操作是如何实现的"><span class="nav-number">2.</span> <span class="nav-text">原子操作是如何实现的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存操作的开销"><span class="nav-number">3.</span> <span class="nav-text">内存操作的开销</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存段竞争"><span class="nav-number">3.0.1.</span> <span class="nav-text">缓存段竞争</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alvin Cao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:alvin.cao@gmail.com" title="E-Mail → mailto:alvin.cao@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/alvincao" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;alvincao" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alvin Cao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

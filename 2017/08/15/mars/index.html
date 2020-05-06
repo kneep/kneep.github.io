@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="DIE0Wlh-SLTFUNEkZ2BUjfEAZfxmZfUeK7VOM49zUJs">
+  <meta name="msvalidate.01" content="4B5475EE8FD1E0C893130B4C3973FAC7">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kneep.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在刚刚登陆火星表面的那几天，火星探路者号的表现可谓无懈可击。在气囊保护下着陆、部署Sojourner Rover（译者注：一辆小机械车）、发回大量数据，包括后来在网上点击率很高的那些全景图。但是几天后，也就是探路者号开始收集气象数据不久，整个系统发生了重启，每次重启都导致数据丢失。关于原因，媒体的说法是“软件小故障”或者“系统想一次性做太多的工作”。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="火星上到底发生了什么">
+<meta property="og:url" content="https://kneep.github.io/2017/08/15/mars/index.html">
+<meta property="og:site_name" content="尼普学种花">
+<meta property="og:description" content="在刚刚登陆火星表面的那几天，火星探路者号的表现可谓无懈可击。在气囊保护下着陆、部署Sojourner Rover（译者注：一辆小机械车）、发回大量数据，包括后来在网上点击率很高的那些全景图。但是几天后，也就是探路者号开始收集气象数据不久，整个系统发生了重启，每次重启都导致数据丢失。关于原因，媒体的说法是“软件小故障”或者“系统想一次性做太多的工作”。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-08-15T05:05:18.000Z">
+<meta property="article:modified_time" content="2020-05-06T14:51:49.992Z">
+<meta property="article:author" content="Alvin Cao">
+<meta property="article:tag" content="译文">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://kneep.github.io/2017/08/15/mars/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>火星上到底发生了什么 | 尼普学种花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">尼普学种花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kneep.github.io/2017/08/15/mars/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alvin Cao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="尼普学种花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          火星上到底发生了什么
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-08-15 13:05:18" itemprop="dateCreated datePublished" datetime="2017-08-15T13:05:18+08:00">2017-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-06 22:51:49" itemprop="dateModified" datetime="2020-05-06T22:51:49+08:00">2020-05-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在刚刚登陆火星表面的那几天，火星探路者号的表现可谓无懈可击。在气囊保护下着陆、部署Sojourner Rover（译者注：一辆小机械车）、发回大量数据，包括后来在网上点击率很高的那些全景图。但是几天后，也就是探路者号开始收集气象数据不久，整个系统发生了重启，每次重启都导致数据丢失。关于原因，媒体的说法是“软件小故障”或者“系统想一次性做太多的工作”。<a id="more"></a></p>
+<p>本周在 IEEE 实时系统研讨会上，我聆听了一次精彩的主题演讲，主讲人是David Wilner，Wind River Systems 的首席技术官。Wind River 创造了 VxWorks，这正是火星探路者号上运行的实时操作系统内核。在演讲中，他详细解释了导致探路者号重启的软件原因，故障如何定位，以及如何解决的。我想和你们中的每一位分享这个故事。</p>
+<p>VxWorks 提供了抢占式进程调度。探路者号上的进程按照优先级来执行，优先级反映了这些进程的轻重缓急。</p>
+<p>探路者号上有一个“数据总线”，可以理解为一块共享内存，用于不同组件之间传递信息。有一个数据总线进程，经常以高优先级运行，负责把数据总线中的数据取出来。访问数据总线需要获得互斥锁（mutex）。</p>
+<p>气象数据进程负责把收集到的气象数据放到数据总线上，运行不频繁，是低优先级进程。存放数据的时候，他先要获得互斥锁，再往总线上写数据，最后再释放互斥锁。如果中断引起数据总线进程被执行，那么它会试图获得互斥锁来读取数据，这会导致它阻塞在互斥锁上，直到气象数据进程释放锁为止。另外探路者号上还有一个中优先级的通信进程。</p>
+<p>在大多数情况下，这种组合工作得很好。但是，在数据总线进程（高优先级）阻塞并等待气象数据进程（低优先级）的间隙，中断可能会导致通信进程（中优先级）被执行。在这种情况下，通信进程如果长时间运行，就阻塞了比它优先级低的气象数据进程，最终的后果是信息总线进程得不到运行。过了一段时间，看门狗意识到数据总线进程很久得不到执行，认为系统发生了严重故障，于是重启了整个系统。</p>
+<p>这个情景是一个经典的优先级反转案例。</p>
+<h1 id="问题是如何定位的？"><a href="#问题是如何定位的？" class="headerlink" title="问题是如何定位的？"></a>问题是如何定位的？</h1><p>VxWorks 可以跟踪所有你感兴趣的系统事件，包括上下文切换、同步对象的使用和中断。喷气推进实验室的工程师们日以继夜在实验室的飞船模型上运行同样的系统， 他们把 VxWorks 的 Trace 打开，并试图完全模拟发生重启时的各种条件。某天早上，其他工程师都回家了，只剩下一个人在工作，他终于在模型上重现了重启的故障。对 Trace 记录的分析表明，优先级反转是发生重启的原因。</p>
+<h1 id="问题是如何解决的？"><a href="#问题是如何解决的？" class="headerlink" title="问题是如何解决的？"></a>问题是如何解决的？</h1><p>VxWorks 的互斥锁在创建的时候，可以用一个布尔参数表示是否要优先级继承。故障中的互斥锁没有使用这个功能，如果使用的话，当高优先级的数据总线进程阻塞在这个互斥锁上时，低优先级的气象数据进程会继承数据总线进程的优先级，这样它的优先级就比通信进程高，从而防止了优先级反转。一旦定位后，喷气推进实验室的工程师们就明白了用优先级继承可以防止重启。</p>
+<p>VxWorks 上有一个 C 语言的解释器，调试的时候，开发人员可以键入 C 表达式和函数来实时执行。碰巧，飞船上天的时候，喷气推进实验室的工程师们决定把这个功能留在上面。根据编码规范，这个互斥锁的初始化参数（包括其他两个可能导致同样问题的互斥锁）保存在全局变量中。保存全局变量地址的符号表就在发射软件中，可以通过 C 解释器访问。这样，一个小程序被上传到飞船上，经过解释器解释后，把这些全局变量的值从 FALSE 改为 TRUE，重启再也没发生过。</p>
+<h1 id="分析和教训"><a href="#分析和教训" class="headerlink" title="分析和教训"></a>分析和教训</h1><p>首先及最主要的，黑盒诊断这样一个问题是很难成功的，只有靠详细的 Trace 才能把这个错误的执行序列抓出来。</p>
+<p>其次，在系统上留一些 Debug 的手段会大大节省时间。如果没有这个 C 语言解释器的话，这个问题可能就解决不了了。</p>
+<p>最后，工程师最初的分析：“数据总线进程执行非常频繁，且时间要求严格——我们不应花额外的时间在优先级继承上”是完全错误的。在这种非常苛刻的条件下，正确性是最重要的，甚至可以牺牲性能。</p>
+<h1 id="人之天性、项目期限的压力"><a href="#人之天性、项目期限的压力" class="headerlink" title="人之天性、项目期限的压力"></a>人之天性、项目期限的压力</h1><p>David 告诉我们，喷气推进实验室的工程师们后来承认，在他们做预飞行测试的时候，曾经碰到过一两次重启。但他们无法解释也无法重现，出于人的天性，他们认为这并不是什么大问题，照例推说“这可能是硬件的小毛病”。</p>
+<p>还有一点是工程师们的工作重心。他们全力关注飞船登陆过程中使用的软件，保证其质量以期完美着陆，如果这都失败，那整个项目就结束了。对于飞船登陆后使用的软件，由于重要性相对低一点，所以，他们对一些偶然出现的故障有所松懈也是可以理解的，更何况重启本身就是解决登陆后故障的一种有效手段。</p>
+<h1 id="优秀理论、算法的重要性"><a href="#优秀理论、算法的重要性" class="headerlink" title="优秀理论、算法的重要性"></a>优秀理论、算法的重要性</h1><p>David 也提到了这个案子真正的幕后英雄是卡耐基梅隆大学的几个人，他们在多年前发表了一篇论文，首次发现了优先级反转问题，并提出了解决办法。他道歉说，他不记得论文的细节和作者的名字了。圆满的是，那篇论文的三位作者当时就坐在大厅里，演讲结束后，主席提议他们起立，接受所有人的致谢。他们是Lui Sha、John Lehoczky、Raj Rajkumar。整个大厅的人为这几位计算机理论科学家欢呼，感谢他们为推进人类知识进步所做的重大贡献，你何时见过这样的场面？真是伟大的时刻。</p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>为完整起见，这篇论文是：<br>L. Sha, R. Rajkumar, and J. P. Lehoczky. Priority Inheritance Protocols: An Approach to Real-Time Synchronization. In IEEE Transactions on Computers, vol. 39, pp. 1175-1185, Sep. 1990.</p>
+<p><em>原文链接：<a href="https://www.microsoft.com/en-us/research/people/mbj/" target="_blank" rel="noopener">https://www.microsoft.com/en-us/research/people/mbj/</a></em></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Alvin Cao
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://kneep.github.io/2017/08/15/mars/" title="火星上到底发生了什么">https://kneep.github.io/2017/08/15/mars/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%91%E6%96%87/" rel="tag"># 译文</a>
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2017/08/15/cache-coherency/" rel="next" title="缓存一致性（Cache Coherency）入门">
+      缓存一致性（Cache Coherency）入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题是如何定位的？"><span class="nav-number">1.</span> <span class="nav-text">问题是如何定位的？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题是如何解决的？"><span class="nav-number">2.</span> <span class="nav-text">问题是如何解决的？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析和教训"><span class="nav-number">3.</span> <span class="nav-text">分析和教训</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#人之天性、项目期限的压力"><span class="nav-number">4.</span> <span class="nav-text">人之天性、项目期限的压力</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优秀理论、算法的重要性"><span class="nav-number">5.</span> <span class="nav-text">优秀理论、算法的重要性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">6.</span> <span class="nav-text">后记</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alvin Cao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:alvin.cao@gmail.com" title="E-Mail → mailto:alvin.cao@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/alvincao" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;alvincao" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alvin Cao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

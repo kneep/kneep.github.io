@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="DIE0Wlh-SLTFUNEkZ2BUjfEAZfxmZfUeK7VOM49zUJs">
+  <meta name="msvalidate.01" content="4B5475EE8FD1E0C893130B4C3973FAC7">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kneep.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="编者的话：提起Linux之父Linus Torvalds，人们首先想到的是他的不近人情，总是听说他“炮轰”这个“炮轰”那个，却很难有机会接近他，了解他是个什么样的人。近日，他做客TED，为我们展现了他鲜为人知的一面。他两次改变了技术世界，第一次是Linux，第二次是Git，他是如何想到要开发这两个软件的？他如何看待开源运动？他又是如何评价自己的性格？以下是访谈全文，翻译自TED视频字幕。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linus Torvalds：Linux背后的智者">
+<meta property="og:url" content="https://kneep.github.io/2017/08/15/linus-ted/index.html">
+<meta property="og:site_name" content="尼普学种花">
+<meta property="og:description" content="编者的话：提起Linux之父Linus Torvalds，人们首先想到的是他的不近人情，总是听说他“炮轰”这个“炮轰”那个，却很难有机会接近他，了解他是个什么样的人。近日，他做客TED，为我们展现了他鲜为人知的一面。他两次改变了技术世界，第一次是Linux，第二次是Git，他是如何想到要开发这两个软件的？他如何看待开源运动？他又是如何评价自己的性格？以下是访谈全文，翻译自TED视频字幕。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://images.derstandard.at/2014/07/21/torvalds.jpg">
+<meta property="og:image" content="https://lh6.googleusercontent.com/-c1oIGIjNK2k/T5t517KBLmI/AAAAAAAAQlU/BcisBbrbNfcnUgboVuUxPoEsDLQU0u4lwCL0B/w594-h587-no/2012-04-27">
+<meta property="article:published_time" content="2017-08-15T15:46:21.000Z">
+<meta property="article:modified_time" content="2020-05-06T14:53:15.222Z">
+<meta property="article:author" content="Alvin Cao">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.derstandard.at/2014/07/21/torvalds.jpg">
+
+<link rel="canonical" href="https://kneep.github.io/2017/08/15/linus-ted/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linus Torvalds：Linux背后的智者 | 尼普学种花</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">尼普学种花</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kneep.github.io/2017/08/15/linus-ted/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Alvin Cao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="尼普学种花">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linus Torvalds：Linux背后的智者
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-08-15 23:46:21" itemprop="dateCreated datePublished" datetime="2017-08-15T23:46:21+08:00">2017-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-06 22:53:15" itemprop="dateModified" datetime="2020-05-06T22:53:15+08:00">2020-05-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><em>编者的话：提起Linux之父Linus Torvalds，人们首先想到的是他的不近人情，总是听说他“炮轰”这个“炮轰”那个，却很难有机会接近他，了解他是个什么样的人。近日，他做客TED，为我们展现了他鲜为人知的一面。他两次改变了技术世界，第一次是Linux，第二次是Git，他是如何想到要开发这两个软件的？他如何看待开源运动？他又是如何评价自己的性格？以下是访谈全文，翻译自<a href="https://www.ted.com/talks/linus_torvalds_the_mind_behind_linux/" target="_blank" rel="noopener">TED视频</a>字幕。</em><a id="more"></a></p>
+<p>(Chris Anderson橙色框，Linus Torvalds蓝色框)</p>
+<div class="note warning">
+            <p>真是怪事啊。你写的软件Linux，成千上万的计算机都在跑，很可能互联网的大量设备都靠它来运行。而且，我觉得世界上有十五亿部左右Android手机在使用中，每一部里面都有你的软件。这真的有点了不起啊。我原本想，你肯定是躲在一个豪华的软件总部里面指挥这一切——谁知我却看到了这么一张照片，震惊了。这居然就是Linux世界的总部。<br><img src="http://images.derstandard.at/2014/07/21/torvalds.jpg" alt=""></p>
+          </div>
+
+<div class="note info">
+            <p>怎么看都不像个司令部啊。我必须说一点，别人对这张照片最感兴趣的地方是里面那张踏步桌。这是我办公室里最有意思的东西，事实上我已经不玩了。这跟我的工作方式有关。</p><p>我的工作方式是……我不想有外部刺激。你们大致能看到，墙刷成了浅绿色。我听说精神病院里面的墙都是这颜色。</p><p>这像是一种平静的颜色，不会真正刺激到我。</p><p>但这张照片里你们看不到电脑，只能看到屏幕。我最在意电脑的一点是——我也喜欢性能强劲的大电脑但不强求——它必须要完全静音。我认识一些Google的员工，他们都在家里部署了小型数据中心，我不喜欢这么干。我的办公室是你见过最无聊的。我独自安静地坐在那儿。如果我的猫跑过来，它就坐在我膝盖上。我喜欢听猫咕噜咕噜叫，不喜欢听电脑风扇声。</p>
+          </div>
+
+<div class="note warning">
+            <p>真是令人惊讶，这样的工作方式帮你经营着这个庞大的技术帝国——确实是个帝国——这是开源力量的一个明证。</p><p>跟我们说说，你那时是如何走上开源之路，Linux是如何诞生的？</p>
+          </div>
+
+<div class="note info">
+            <p>我至今还是一个人工作。真的——我在自己家一个人工作，经常穿着浴袍。摄影师来了我才想着拾掇一下，把衣服穿起来。</p><p>这是我一直以来的工作方式。我开始写Linux的时候也是如此。起初我并没有想过把Linux做成一个协作型项目。那时候我做了好几个个人项目，Linux是其中一个，我做Linux部分是因为我需要这个软件，但更主要的原因是，我只是享受编程。所以，你可以说是我因为想要最终的结果，但二十五年过去了，项目还没有结束的迹象。更确切的原因是，我那时想自己独立做个项目，还没开源什么事，真的，至少当时我没关注过开源。</p><p>接下来发生的是……这个项目成长了，变成了真正的作品，你想展示给别人看。真的，这就好像你说，“哇，看看我做出了什么！”不过相信我——当时的版本其实不怎么行。我公开发布了它，当时这还算不上真正的“开源”。源码确实是公开的，但如今我们思考着用开源方法论去改进Linux，那时却毫无此动机。当时的动机更像是，“看，这是我半年的心血，我想听听你们的意见。”</p><p>其他人来找我了。在赫尔辛基大学，我有个朋友是开源软件的支持者——当时一般叫做“自由软件”——他使我第一次有了这样的概念，嘿，你可以使用现有的开源许可证。我考虑了一会儿。我真正担心的是被商业公司盯上。我觉得这也是大多数开源软件新手所担心的，就是他们的作品被利用来攫取商业利益，不是吗？所以，我下定决心，“豁出去了！”然后——</p>
+          </div>
+
+<div class="note warning">
+            <p>然后，有人给你贡献了代码，对此你觉得，“哇，真的很有意思，我从来没想到过这点，这个修改确实能改善它。”</p>
+          </div>
+
+<div class="note info">
+            <p>最初大家并没有贡献代码，而是贡献想法。其实只是有其他人看了一眼你的项目——我相信别的领域也是如此，但对代码我更加深信不疑——那就是，别人先对你的代码产生兴趣，深入阅读，而后才能给你反馈和想法。这对我来说意义重大。</p><p>当时我21岁，很年轻，但基本上我从十或十一岁就开始编程了。之前我所有的项目都是一个人在做，当人们开始发表意见，反馈对Linux代码的看法，这给了我启发。就算当时还没人开始贡献真正的代码，我已经觉得那是个了不起的里程碑，对此我说道，“我爱大家！”——别误解，其实我不是个善于交际的人。</p><p>我真的不喜欢和他人打交道。</p><p>但我热爱计算机。我喜欢通过邮件和他人互动，因为这种方式给人以缓冲。但我真的爱那些发表评论，参与我项目的人们。是他们成就了Linux。</p>
+          </div>
+
+<div class="note warning">
+            <p>是不是有那么一个时刻，你看着自己的作品，它忽然开始取得成绩了，然后你想，“慢点，这项目可能大有作为啊，不仅仅是一个个人项目，收到点友好的反馈那么简单，它可能成为整个技术世界的引爆点”？</p>
+          </div>
+
+<div class="note info">
+            <p>没怎么想过。对我来说意义重大的时刻，不是它功成名就，而恰是它规模尚小之时。对我来说重要的是，我不再独行，有十个，也许是一百个队友了。其他一切事情都是水到渠成。从一百个参与者增长到一百万个没什么大不了——对于我来说如此。好吧，这也算件大事，如果你——</p><p>如果你想把劳动成果卖掉换钱的话，这可是笔巨款——所以你们不要误解我。但如果你的兴趣在于技术和项目本身，那重要的事情就是把社区培养起来了。然后社区逐渐壮大。事实上，我并没有在任何特定的时间点上想过，“哇哦，这东西一夜之间关注度爆棚啊”，因为——相对来说培养社区是个细水长流的过程。</p>
+          </div>
+
+<div class="note warning">
+            <p>跟我聊过的所有技术专家都感谢你大大改变了他们的工作。不仅是因为Linux，还因为一个叫Git的东西，就是这个软件开发的管理系统。跟我们大致说说Git，以及你在其中扮演的角色。</p>
+          </div>
+
+<div class="note info">
+            <p>我们当时遇到个问题，这个问题是需要一定时间才会显现的，那就是——当你的项目从十人或一百人增长到一万人——当前内核的情况是，每个版本会有一千人参与其中，两个月，或者说两到三个月发布一个版本。有些人并不会改很多代码，很多人只做很小很小的修改。</p><p>要维护好代码，但是规模决定了维护方式。我们经历了很多痛苦。业内有专为维护代码而生的项目。CVS就是最流行的工具之一。但我打心底里讨厌CVS，拒绝染指它，我尝试了一个极端但很有趣的软件，别人都不喜欢它。</p><p>我们的处境很糟糕，因为我们有成千的人想参与进来，他们的方式又各异，我终于忍不了了，因为我们的工具在成千人的规模下并不能像以往一样工作自如。</p><p>所以Git成了我第二个大项目，而它就是为了维护好我的第一个大项目而生的。这正是我的工作方式，我并不是为了——好吧，我确实是为了乐趣而编程——但我也想写点有意义的东西，所以我的每个项目都是我需要的，并且——</p>
+          </div>
+
+<div class="note warning">
+            <p>所以，你本不想与很多人共事，却无心插柳促成了Linux和Git的诞生。</p>
+          </div>
+
+<div class="note info">
+            <p>绝对是。</p>
+          </div>
+
+<div class="note warning">
+            <p>了不起啊。</p>
+          </div>
+
+<div class="note info">
+            <p>是啊。</p>
+          </div>
+
+<div class="note warning">
+            <p>你给技术带来了两次变革，我们要深究一下为何如此，你已经给了我们点线索，但是……这里有一张你小时候的照片，拿着个魔方。你前面提到你从十或十一岁就开始编程了。<br><img src="https://lh6.googleusercontent.com/-c1oIGIjNK2k/T5t517KBLmI/AAAAAAAAQlU/BcisBbrbNfcnUgboVuUxPoEsDLQU0u4lwCL0B/w594-h587-no/2012-04-27" alt=""></p><p>你是那种被称作“怪咖”的计算机天才吗？你在学校里是全能的明星吗？你小时候是什么样的？</p>
+          </div>
+
+<div class="note info">
+            <p>是啊，我是个典型的书虫。我的意思是……那时候我就是个不善交际的人。旁边的人是我弟弟，对于魔方，显然我比他更感兴趣。</p><p>我妹妹，她不在照片里，我们家庭聚会时——家庭不大，但我有几个表兄弟——她会给我打预防针，我要回房间时，她会说，“这么做真有点那啥……”因为我没有——我只是个极客，我沉迷于计算机，沉迷于数学，沉迷于物理。我精于此道。我不觉得我很特别。我妹妹貌似说过，我最大的特质在于我不易放手。</p>
+          </div>
+
+<div class="note warning">
+            <p>好，我们来想象一下，有意思。不易放手。也就是说你的特别之处不在于你是个极客，也不在于你是否聪明，而在于你很……固执？</p>
+          </div>
+
+<div class="note info">
+            <p>确实因为我固执。如果我开始做某件事，我不会说，“好了，我完成了，我们来干点别的——看，很牛吧！”</p><p>而且我注意到我人生的其他很多方面也是如此。我在硅谷一住七年。在此期间一直服务于同一家公司。闻所未闻啊，这不是硅谷的工作风格。硅谷的标志是大家来回跳槽以获得全面的工作经验。但我不是这种人。</p>
+          </div>
+
+<div class="note warning">
+            <p>但在Linux的实际开发中，你的固执有时会使你和他人产生冲突。聊聊这个吧。保持软件的质量如此重要吗？你如何看待期间发生过的事？</p>
+          </div>
+
+<div class="note info">
+            <p>我不知道是否重要。回到“我不善于交际”的话题——有时候我也有点——可以说“短视”，在事关他人感受的事情上，这种“短视”会使我说出伤害别人的话。但我并不以此为荣。</p><p>但是，同时——我能理解那些劝我友善点的人，然后我跟他们解释，也许你很友善，但也许你应该多点进取心，他们听了就认为我不友善。</p><p>我想表达的是，人与人不同。我并不善于交际；我不以此为荣，但我就这样的。我很喜欢开源的一点是，它让不同的人一起合作。我们不必喜欢对方——并且有时候我们真的不喜欢对方——我是说，会有非常非常激动的争论。但实际上你会发现——有些事情你容不得不同意见，其实只是因为你们的关注点不同而已。</p><p>回到刚才我说的，我怕商业公司的人利用我的成果，但很快你会发现，这些人其实非常非常可爱。他们完成了所有我没兴趣做的事情，他们有完全不同的目标。他们利用开源软件的方式，我是不会去做的。但因为这是开源的，所以他们可以利用。大家真的合作得很好。</p><p>我觉得对于开源社区道理也一样。你需要有善于交际的人，那些沟通专家，他们是温暖而友善的人——</p><p>真心想拥抱你，并邀你加入社区。但不是每个人都这样。我就不是这种人。我关心的是技术。也有人关心UI。我死也不愿意做UI。我是说，如果我被困在一个孤岛上，唯一逃生的机会就是写出一套漂亮的UI，那么我死定了。</p><p>所以人与人是不一样的，我不是在找借口，我只是在解释。</p>
+          </div>
+
+<div class="note warning">
+            <p>好，我们上周聊过，你谈到了你的某些其他特质，我觉得很有意思，这个称做品位的概念。</p><p>我这里有几张图片。我想这张代码是糟糕品位的例证，而这张的品位好点，一眼就能看出来。两者有什么区别？</p>
+          </div>
+
+<div class="note info">
+            <p>这是——这里多少人真正写过代码？</p>
+          </div>
+
+<div class="note warning">
+            <p>天哪。</p>
+          </div>
+
+<div class="note info">
+            <p>LT：我敢保证，每个举手的人，都实现过所谓的单向链表。教单向链表——这第一种方法品位不怎么样，但你刚开始学编程的时候基本就是这么教的。你们并不一定要懂代码。</p><p>对于我来说，最有意思的部分是最后的if语句。因为，单向链表就是这样——这段代码是要从链表中移除一个节点——这个节点位于头上，或中间，是应该有不同处理的。因为如果它是头节点，你需要改变头指针的指向。如果是个中间节点，你前一节点里面的指针的指向。这是完全不同的情况。</p>
+          </div>
+
+<div class="note warning">
+            <p>这个就好点了。</p>
+          </div>
+
+<div class="note info">
+            <p>确实好点。没有if语句。真的没关系——我不需要你们理解为什么没有if语句，但我希望你们理解的是，你可以从另一个角度去看待问题，重写代码，把一种特殊的情形融入正常的情形中。这就是好代码。但这代码太简单。这是计算机系的第一门课。不是重要的代码——虽然细节是很重要。</p><p>对于我来说，我想跟那些具有良好品位的人共事，良好的品位是——我发给你这个很傻的例子，算不上跟品位有关，因为代码太微不足道了。良好的品位意味着更多。良好的品位意味着你善于发现更抽象层面的规律，并且本能地觉察出解决问题的正确方法。</p>
+          </div>
+
+<div class="note warning">
+            <p>好，我们来总结一下。你有品位，这种品位对软件行业的人颇有意义。你是——</p>
+          </div>
+
+<div class="note info">
+            <p>我觉得对这里的一些人也有意义。</p>
+          </div>
+
+<div class="note warning">
+            <p>你是非常聪明的程序员，你也出奇地固执。但你肯定还有点别的什么特质。你改变了未来。你肯定有能力看见这些未来的远景。你是个有远见的人，是吗？</p>
+          </div>
+
+<div class="note info">
+            <p>其实我前面两天在TED有点难受，因为远景满天飞啊，对吧？我不是个有远见的人。我没有什么五年计划。我是个工程师。我认为——有些人成天到处晃悠，喜欢仰望星空，说“我要去那儿”，其实我对这类人完全没意见——但我喜欢盯着地面，我要在跌倒之前，铺平前面的坑。我是这样的人。</p>
+          </div>
+
+<div class="note warning">
+            <p>上星期你跟我谈到了这两类人的代表。分别是谁，你跟他们相比如何？</p>
+          </div>
+
+<div class="note info">
+            <p>好吧，这在技术领域也是老生常谈了，特斯拉和爱迪生。特斯拉被认为是一个具有远见卓识的科学家，脑子里充满了异想天开的创意。人们喜欢特斯拉，有人就用特斯拉来命名他们的公司。</p><p>另一个人是爱迪生，人们经常认为他平庸乏味——他最有名的一句话是，“天才就是1%的灵感加99%的汗水。”我属于爱迪生阵营，哪怕人们不会都喜欢他。因为如果你细细比较这两个人，你会发现特斯拉的智慧更迎合当下的口味，但是谁真正改变了世界？爱迪生可能不是一个友善的人，但他做了很多事——他也许不怎么聪明，也没什么远见。我想我更接近爱迪生而不是特斯拉。</p>
+          </div>
+
+<div class="note warning">
+            <p>TED本周的主题是梦想——宏伟、大胆、无畏的梦想。然后你迎面一盆冷水浇了上去。</p>
+          </div>
+
+<div class="note info">
+            <p>是啊，我确实想让他们稍微降降温。</p>
+          </div>
+
+<div class="note warning">
+            <p>不错。</p><p>Google和其他很多公司利用你的软件赚走了数亿美元。你生气吗？</p>
+          </div>
+
+<div class="note info">
+            <p>不。不，我不生气，有几个原因。一个原因是，我生活过得很好，我真的过得很好。</p><p>但还有一个原因——如果我不开源，不懂得放弃一些东西，Linux绝对不会有今天的地位。它带来了一些令我不适的经历，比如公开演讲，但同时，这也算是一种经验。相信我。所以，Linux这个软件身上正在发生的很多事情，使我很开心，使我坚信当初的选择是正确的。</p>
+          </div>
+
+<div class="note warning">
+            <p>开源的理想——我想我们今天就以这个话题结束——在现今世界，开源的理想真的实现了吗？抑或它还有更长的路要走，有更多的事要做？</p>
+          </div>
+
+<div class="note info">
+            <p>我持两方面观点。我认为在代码的世界中，开源之所以能运转得很好，原因之一是每天的工作成果基本上是非黑即白的。总是有一个相对不错的办法能判断，这代码写得不错，那代码写得不行。代码要么能运行，要么不能，这意味着可争论的空间不大。但即便如此，我们还是会有争论，对吧？在其他很多领域——人们谈论开源政治或其他类似事情——有的时候你真的很难说这样的话，是的，你可以在其他领域运用同一原则因为在这些领域只是黑白变成了其他颜色而已，并没有什么模棱两可的。</p><p>显而易见，科学领域的开源正在回归。科学一开始在发展，但最终变得固步自封，只剩下昂贵的期刊和类似的东西。然后科学领域的开源正在回归，带来了arXiv和开放的期刊。维基百科也改变了世界。还有一些例子，我相信会出现更多。</p>
+          </div>
+
+<div class="note warning">
+            <p>但你也没什么远见，所以就没你什么事了。</p>
+          </div>
+
+<div class="note info">
+            <p>是啊。</p><p>应该由你们来操心，对吧？</p>
+          </div>
+
+<div class="note warning">
+            <p>非常正确。</p><p>Linus Torvalds，Linux感谢你，互联网感谢你，所有Android手机感谢你。</p><p>感谢你来到TED让我们认识真实的你。</p>
+          </div>
+
+<div class="note info">
+            <p>谢谢。</p>
+          </div>
+
+<p>观看视频：<a href="https://www.ted.com/talks/linus_torvalds_the_mind_behind_linux/transcript?language=en" target="_blank" rel="noopener">https://www.ted.com/talks/linus_torvalds_the_mind_behind_linux/transcript?language=en</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Alvin Cao
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://kneep.github.io/2017/08/15/linus-ted/" title="Linus Torvalds：Linux背后的智者">https://kneep.github.io/2017/08/15/linus-ted/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/08/15/atomics-and-contention/" rel="prev" title="原子操作和竞争">
+      <i class="fa fa-chevron-left"></i> 原子操作和竞争
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/07/07/introducing-tott/" rel="next" title="介绍“马桶上的测试”">
+      介绍“马桶上的测试” <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Alvin Cao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:alvin.cao@gmail.com" title="E-Mail → mailto:alvin.cao@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/alvincao" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;alvincao" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alvin Cao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

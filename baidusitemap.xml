@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://kneep.github.io/2017/08/15/linus-ted/</loc>
+    <lastmod>2020-05-06</lastmod>
+  </url>  <url>
+    <loc>https://kneep.github.io/2017/08/15/mars/</loc>
+    <lastmod>2020-05-06</lastmod>
+  </url>  <url>
+    <loc>https://kneep.github.io/2018/07/07/introducing-tott/</loc>
+    <lastmod>2020-05-06</lastmod>
+  </url>  <url>
+    <loc>https://kneep.github.io/2019/11/07/error-prone/</loc>
+    <lastmod>2020-05-06</lastmod>
+  </url>  <url>
+    <loc>https://kneep.github.io/2017/08/15/cache-coherency/</loc>
+    <lastmod>2020-05-06</lastmod>
+  </url>  <url>
+    <loc>https://kneep.github.io/2017/08/15/atomics-and-contention/</loc>
+    <lastmod>2020-05-06</lastmod>
+  </url>  <url>
+    <loc>https://kneep.github.io/2018/08/26/tott-stubs-speed-up-your-unit-tests/</loc>
+    <lastmod>2020-05-05</lastmod>
+  </url>  <url>
+    <loc>https://kneep.github.io/2018/07/28/tott-naming-unit-tests-responsibly/</loc>
+    <lastmod>2020-05-05</lastmod>
+  </url>  <url>
+    <loc>https://kneep.github.io/2018/08/23/tott-js-simulating-time-in-jsunit-tests/</loc>
+    <lastmod>2020-05-05</lastmod>
+  </url>  <url>
+    <loc>https://kneep.github.io/2018/07/08/tott-better-stubbing-in-python/</loc>
+    <lastmod>2020-05-05</lastmod>
+  </url>
+</urlset>
