@@ -36,6 +36,8 @@ isCJKLanguage = true
 中文书籍的出版经常会滞后于英文原版几年，读英文原版能确保我们读到最新的版本。大部分计算机书籍的中文翻译质量也不好，有时候比英文更难理解。更重要的一点，我们需要信息自由。当我们阅读英文的速度能接近母语的时候，会感觉无比自由。
 
 ### 发现真正的问题，并用学到的软件知识去解决
+> “The only way to learn a new programming language is by writing programs in it” —— Dennis Ritchie, Creator of the C programming language
+
 把书本知识转化固化为内在的认知，一定要做真正的项目。这个项目不一定是你的工作职责给你的任务。生活和工作中有大量可以使用软件去解决的问题，尝试发现这些问题（比如帮助同事处理一个表格），然后去解决它。在解决过程中，会产生更深刻的认知。
 
 {{< admonition note "注意" true >}}
@@ -307,7 +309,7 @@ Git 已经不仅仅是一个版本管理工具，已经成为一种管理数据�
 
 优先级：3
 {{< /admonition >}}
-## 其他好书（未读）
+## 其他好书（未整理）
 ### The Joy of Cryptography
 > https://joyofcryptography.com
 
@@ -342,6 +344,16 @@ Git 已经不仅仅是一个版本管理工具，已经成为一种管理数据�
 > https://marabos.nl/atomics/
 
 关于 Rust 的 原子操作和锁的书，Paul McKenney 作序。
+
+### Modern CPP Programming
+> https://github.com/federico-busato/Modern-CPP-Programming
+
+Nvidia 工程师 Federico Busato 写的 C++ 教程，持续更新，以精美的幻灯片形式呈现。
+
+### A Philosophy of Software Design, 2nd Edition
+> https://web.stanford.edu/~ouster/cgi-bin/book.php
+
+斯坦福教授 John Ousterhout 写的关于软件设计的书，不少人推荐作为 Clean Code 的替换。John Ousterhout 还是 Tcl 编程语言的发明者。
 
 ## 去哪里买绝版书
 多抓鱼是一个二手流转平台（有App和微信小程序），应该说大部分书都能找到，但抢手的二手书需要等，可以注册一个到货通知，但也不一定抢得过别人。可以预定，但需要支付多抓鱼专用的积分——「鱼」，获取「鱼」先要卖抢手的书给多抓鱼。
