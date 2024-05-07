@@ -77,7 +77,7 @@ keywords = ["EV", "SDV", "C++", "Rust", "Computer Science", "Operating System"]
     gravatarEmail = ""
     # URL of avatar shown in home page
     # 主页显示头像的 URL
-    avatarURL = "/images/avatar.webp"
+    avatarURL = "/images/avatar.jpg"
     # URL the avatar links to
     # 头像的链接指向的 URL
     avatarLinkURL = ""
@@ -86,7 +86,7 @@ keywords = ["EV", "SDV", "C++", "Rust", "Computer Science", "Operating System"]
     title = ""
     # subtitle shown in home page
     # 主页显示的网站副标题
-    subtitle = "尼普学种花"
+    subtitle = "没时间种花的汽车人"
     # whether to use typeit animation for subtitle
     # 是否为副标题显示打字机动画
     typeit = false

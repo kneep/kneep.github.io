@@ -18,7 +18,7 @@ fingerprint = ""
 dateFormat = "2006-01-02"
 # website images for Open Graph and Twitter Cards
 # 网站图片, 用于 Open Graph 和 Twitter Cards
-images = ["/images/avatar.webp"]
+images = ["/images/avatar.jpg"]
 # enable PWA
 # 开启 PWA 支持
 enablePWA = false
@@ -271,7 +271,7 @@ cacheRemoteImages = false
   # Social share links in post page
   # 文章页面的分享信息设置
   [page.share]
-    enable = true
+    enable = false
     Baidu = false
     Blogger = false
     Buffer = false
@@ -297,13 +297,13 @@ cacheRemoteImages = false
     Tumblr = false
     Twitter = false
     VK = false
-    Weibo = true
+    # Weibo = true
     # Weixin API example: "https://tenapi.cn/qr/?txt="
     # https://docs.tenapi.cn/qrcode.html
     # https://www.free-api.com/doc/531
     # http://www.alapi.cn/api/view/72
     # OR self-hosted: https://github.com/yhf7952/QrCodeApi
-    Weixin = "https://tenapi.cn/qr/?txt="
+    # Weixin = "https://tenapi.cn/qr/?txt="
     Whatsapp = false
     Xing = false
     Mastodon = false
@@ -491,7 +491,7 @@ cacheRemoteImages = false
     # 出版者信息
     [page.seo.publisher]
       name = "xxxx"
-      logoUrl = "/images/avatar.webp"
+      logoUrl = "/images/avatar.jpg"
   # Related content config
   # 相关文章推荐配置
   [page.related]

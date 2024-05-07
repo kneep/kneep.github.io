@@ -23,22 +23,22 @@
   url = "/tags/"
   title = ""
   weight = 2
-[[main]]
-  identifier = "categories"
-  pre = ""
-  post = ""
-  name = "分类"
-  url = "/categories/"
-  title = ""
-  weight = 3
-[[main]]
-  identifier = "series"
-  pre = ""
-  post = ""
-  name = "系列"
-  url = "/series/"
-  title = ""
-  weight = 4
+#[[main]]
+#  identifier = "categories"
+#  pre = ""
+#  post = ""
+#  name = "分类"
+#  url = "/categories/"
+#  title = ""
+#  weight = 3
+#[[main]]
+#  identifier = "series"
+#  pre = ""
+#  post = ""
+#  name = "系列"
+#  url = "/series/"
+#  title = ""
+#  weight = 4
 #[[main]]
 #  identifier = "authors"
 #  pre = ""
