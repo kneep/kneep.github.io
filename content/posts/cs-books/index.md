@@ -2,7 +2,7 @@
 title = '我们读什么计算机书'
 summary = '给嵌入式软件工程师的读书指南'
 date = '2023-04-20'
-tags = ['计算机', '读书']
+tags = ['工程实践']
 isCJKLanguage = true
 +++
 
@@ -30,7 +30,9 @@ isCJKLanguage = true
 中文书籍的出版经常会滞后于英文原版几年，读英文原版能确保我们读到最新的版本。大部分计算机书籍的中文翻译质量也不好，有时候比英文更难理解。更重要的一点，我们需要信息自由。当我们阅读英文的速度能接近母语的时候，会感觉无比自由。
 
 ### 发现真正的问题，并用学到的软件知识去解决
-> “The only way to learn a new programming language is by writing programs in it” —— Dennis Ritchie, Creator of the C programming language
+{{< admonition quote "Dennis Ritchie, Creator of the C programming language" true >}}
+The only way to learn a new programming language is by writing programs in it.
+{{< /admonition >}}
 
 把书本知识转化固化为内在的认知，一定要做真正的项目。这个项目不一定是你的工作职责给你的任务。生活和工作中有大量可以使用软件去解决的问题，尝试发现这些问题（比如帮助同事处理一个表格），然后去解决它。在解决过程中，会产生更深刻的认知。
 
