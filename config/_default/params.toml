@@ -495,7 +495,7 @@ cacheRemoteImages = false
   # Related content config
   # 相关文章推荐配置
   [page.related]
-    enable = true
+    enable = false
     count = 5
 
 # Sponsor config
