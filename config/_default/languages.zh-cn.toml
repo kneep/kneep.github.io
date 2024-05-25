@@ -4,7 +4,7 @@ languageDirection = "ltr"
 weight = 1
 
 title = "尼普学种花"
-# copyright = "Copy, _right?_ :thinking_face:"
+copyright = "© 2023 - 2024 Alvin Cao | [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)"
 
 [params]
   dateFormat = "January 2, 2006"
