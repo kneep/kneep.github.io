@@ -6,7 +6,7 @@
   unsafe = true
 
 [highlight]
-  noClasses = false
+  style = "rose-pine-dawn"
 
 [tableOfContents]
   startLevel = 2

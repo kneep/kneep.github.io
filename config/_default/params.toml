@@ -10,7 +10,7 @@ defaultAppearance = "light" # valid options: light or dark
 autoSwitchAppearance = true
 
 enableSearch = true
-enableCodeCopy = true
+enableCodeCopy = false
 enableImageLazyLoading = true
 enableImageWebp = true
 
