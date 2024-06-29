@@ -2,6 +2,7 @@
 title = '【内存模型】顺序一致性'
 series = '内存模型'
 date = '2024-05-10'
+keywords = ['计算机原理', '操作系统', '内存模型', '并发']
 tags = ['工程实践']
 isCJKLanguage = true
 +++

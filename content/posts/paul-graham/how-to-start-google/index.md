@@ -3,6 +3,7 @@ title = '【Paul Graham】如何创立谷歌那样的公司'
 summary = 'Paul Graham 给孩子们的创业建议'
 date = '2024-04-29'
 series = 'Paul Graham'
+keywords = ['Paul Graham', '创业', '编程']
 tags = ['译文']
 isCJKLanguage = true
 +++

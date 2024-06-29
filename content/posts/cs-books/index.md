@@ -1,6 +1,7 @@
 +++
 title = '我们读什么计算机书'
 summary = '给嵌入式软件工程师的读书指南'
+keywords = ['计算机书籍', '自学', '嵌入式']
 date = '2023-04-20'
 tags = ['工程实践']
 isCJKLanguage = true
