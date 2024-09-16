@@ -26,13 +26,13 @@
   weight = 30
 
 [[main]]
-  identifier = "search"
+  identifier = "搜索"
   weight = 99
   [main.params]
     action = "search"
 
 [[main]]
-  identifier = "locale"
+  identifier = "语言"
   weight = 100
   [main.params]
     action = "locale"
@@ -42,6 +42,6 @@
 # the copyright notice. Configure as per the main menu above.
 
 # [[footer]]
-#   name = "Tags"
+#   name = "标签"
 #   pageRef = "tags"
 #   weight = 10

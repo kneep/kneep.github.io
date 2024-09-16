@@ -7,8 +7,7 @@
 
 [highlight]
   noClasses = false
-  style = "rose-pine-dawn"
 
 [tableOfContents]
   startLevel = 2
-  endLevel = 4
+  endLevel = 3

@@ -13,6 +13,7 @@ enableSearch = true
 enableCodeCopy = true
 enableImageLazyLoading = true
 enableImageWebp = true
+enableQuicklink = true
 
 # robots = ""
 fingerprintAlgorithm = "sha256"
@@ -26,19 +27,19 @@ fingerprintAlgorithm = "sha256"
 [footer]
   showCopyright = true
   showThemeAttribution = true
-  showAppearanceSwitcher = false
+  showAppearanceSwitcher = true
   showScrollToTop = true
 
 [homepage]
   layout = "profile" # valid options: page, profile, custom
   showRecent = true
-  recentLimit = 5
+  recentLimit = 10
 
 [article]
   showDate = true
   showDateUpdated = true
   showAuthor = true
-  showBreadcrumbs = false
+  showBreadcrumbs = true
   showDraftLabel = true
   showEdit = false
   # editURL = "https://github.com/username/repo/"
@@ -54,11 +55,11 @@ fingerprintAlgorithm = "sha256"
   # sharingLinks = ["facebook", "x-twitter", "mastodon", "pinterest", "reddit", "linkedin", "email", "telegram", "line", "weibo"]
 
 [list]
-  showBreadcrumbs = false
+  showBreadcrumbs = true
   showSummary = false
-  showTableOfContents = false
-  showTaxonomies = true
-  groupByYear = true
+  showTableOfContents = true
+  showTaxonomies = false
+  groupByYear = false
   paginationWidth = 1
 
 [sitemap]
@@ -70,10 +71,9 @@ fingerprintAlgorithm = "sha256"
 [fathomAnalytics]
   # site = "ABC12345"
 
-[plausibleAnalytics]
-  # domain = "blog.yoursite.com"
-  # event = ""
-  # script = ""
+#[umamiAnalytics]
+#  site = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+#  region = "eu"  # Can be either "eu" or "us"
 
 [verification]
   # google = ""

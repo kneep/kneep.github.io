@@ -4,10 +4,10 @@
 
 theme = "congo"
 baseURL = "https://kneep.github.io/"
-defaultContentLanguage = "zh-cn"
+defaultContentLanguage = "zh-Hans"
 
 enableRobotsTXT = true
-paginate = 10
+paginate = 15
 summaryLength = 0
 
 googleAnalytics = "G-D9SNZ16ZSE"
