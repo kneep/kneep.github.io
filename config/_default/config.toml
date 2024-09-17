@@ -7,10 +7,12 @@ baseURL = "https://kneep.github.io/"
 defaultContentLanguage = "zh-Hans"
 
 enableRobotsTXT = true
-paginate = 15
 summaryLength = 0
 
 googleAnalytics = "G-D9SNZ16ZSE"
+
+[pagination]
+  pageSizer = 15  
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
