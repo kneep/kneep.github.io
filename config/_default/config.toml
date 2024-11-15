@@ -3,7 +3,7 @@
 # https://jpanther.github.io/congo/docs/getting-started/
 
 theme = "congo"
-baseURL = "https://kneep.github.io/"
+baseURL = "https://kneep.top/"
 defaultContentLanguage = "zh-Hans"
 
 enableRobotsTXT = true
@@ -14,7 +14,7 @@ timeout = "60s"
 googleAnalytics = "G-D9SNZ16ZSE"
 
 [pagination]
-  pageSizer = 15  
+  pageSizer = 15
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
