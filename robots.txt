@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://kneep.github.io/sitemap.xml
+Sitemap: https://kneep.top/sitemap.xml
