@@ -12,6 +12,7 @@ summaryLength = 0
 timeout = "60s"
 
 googleAnalytics = "G-D9SNZ16ZSE"
+enableGitInfo = true
 
 [pagination]
   pageSizer = 15
