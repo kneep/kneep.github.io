@@ -2,7 +2,7 @@
 title = '【内存模型】TSO'
 series = '内存模型'
 date = '2025-03-15'
-keywords = ['计算机原理', '操作系统', '内存模型', '并发']
+keywords = ['计算机原理', '操作系统', '内存模型', '并发', '内存屏障']
 tags = ['工程实践']
 isCJKLanguage = true
 +++
