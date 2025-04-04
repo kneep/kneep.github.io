@@ -1,5 +1,5 @@
 +++
-title = '【内存模型】TSO'
+title = '内存模型 3：TSO'
 series = '内存模型'
 date = '2025-03-15'
 keywords = ['计算机原理', '操作系统', '内存模型', '并发', '内存屏障']
@@ -88,6 +88,11 @@ bypassing 是符合直觉的，因为我们直观上认为，同一处理器写�
 ```
 L(a) = Max<m { S(a) | S(a) <m L(a) } 或 S(a) <p L(a)
 ```
+{{< katex >}}
+$$
+{L(a) = MAX_{<m} \{ S(a)\ |\ S(a) \text{  <m  } L(a)\} \text{ or } S(a) \text{  <p  } L(a)}
+$$
+
 `S(a) <p L(a)`是指针对同一地址的最新一个写指令。
 {{< alert "triangle-exclamation" >}}
 变更二：对地址`a`的`Load`，要么读到`<m`中的最新值，要么读到`<p`中的最新值，而且后者优先。
