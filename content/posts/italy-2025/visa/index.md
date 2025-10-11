@@ -3,7 +3,7 @@ title = '意大利申根签证通关'
 date = '2025-04-04'
 series = 'Italy 2025'
 keywords = ['意大利旅游攻略', '意大利游记', '意大利自驾', '意大利签证', '申根签证']
-tags = ['旅行']
+tags = ['看世界']
 isCJKLanguage = true
 +++
 
