@@ -1,0 +1,168 @@
+baseURL: "https://kneep.top"
+title: "尼普学种花"
+theme: "narrow"
+
+enableRobotsTXT: true
+
+languageCode: "zh-Hans"
+defaultContentLanguage: "zh-cn"
+
+timeZone: "Asia/Shanghai"
+
+hasCJKLanguage: true
+enableEmoji: true
+
+enableGitInfo: true
+
+pagination:
+  pageSizer: 6
+
+taxonomies:
+  category: categories
+  tag: tags
+
+params:
+  description: "种花、旅行、写代码"
+  keywords: ["旅行", "自驾", "计算机科学", "代码", "操作系统"]
+  defaultAuthor: "Alvin Cao"
+  language: "zh-Hans"
+  shortName: "尼普学种花"
+  logo:
+    image: "/favicon.svg"  # Relative path in static directory, leave empty to use site title"s first letter with theme color
+    link: "/"                  # Click to visit site homepage
+    favicon:
+      svg: "/favicon.svg"        # SVG format favicon
+    #images: 
+      #- "/images/og-default.avif"  # Default Open Graph image
+  stickyHeader: true  # Sticky navigation bar
+  showThemeSwitch: true      # Whether to show theme color switch button
+  showDarkModeSwitch: true   # Whether to show dark mode switch button
+  showLanguageSwitch: false   # Whether to show language switch button
+  languageSwitchMode: dropdown # Language switch mode: "dropdown" (show panel) or "cycle" (direct cycle)
+  author:
+    name: "Alvin Cao"
+    title: "一个手艺人的自我记录"
+    description: "种花、旅行、古法编程"
+    avatar: "/img/author.jpg"
+    social:
+      - name: "Email"
+        url: "mailto:alvin.cao@gmail.com"
+        icon: "email"
+  home:
+    recentPostsCount: 5
+  post:
+    showRelated: true           # Related
+    relatedPostsCount: 3        # Related posts numbers
+  license:
+    show: true
+    author: Hugo Narrow
+    name: "CC BY-NC-SA 4.0"
+    description: "This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. Please attribute the source, use non-commercially, and maintain the same license."
+    url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+    displayName: "CC BY-NC-SA 4.0"
+  analytics:
+    enabled: true    # Master switch
+    google:
+      enabled: true
+      id: "G-D9SNZ16ZSE"
+  readingProgress:
+    enabled: true
+    height: 3
+    showOnHomepage: false
+    smoothScroll: true
+    hideOnComplete: false
+  colorScheme: "claude"
+  themes:
+    default:
+      name: "Default"
+      order: 1
+    claude:
+      name: "Claude"
+      order: 2
+    bumblebee:
+      name: "Bumblebee"
+      order: 3
+    emerald:
+      name: "Emerald"
+      order: 4
+    nord:
+      name: "Nord"
+      order: 5
+    sunset:
+      name: "Sunset"
+      order: 6
+    abyss:
+      name: "Abyss"
+      order: 7
+    dracula:
+      name: "Dracula"
+      order: 8
+  codeblock:
+    collapse:
+      enabled: true
+      defaultState: expanded  # Default collapse behavior: expanded, collapsed
+      autoCollapseLines: 30   # Collapse when exceeding specified lines
+      autoCollapseHeight: 400  # Collapse when exceeding specified height
+      collapsedHeight: 120    # Height when collapsed
+
+katex:
+  enable: true
+  delimiters:
+  - left: $$
+    right: $$
+    display: true
+  - left: $
+    right: $
+    display: false
+      
+markup:
+  highlight:
+    codeFences: true           # Enable code fences
+    guessSyntax: true         # Auto-detect language
+    lineNos: true             # Show line numbers
+    lineNumbersInTable: false  # Use table-style line numbers, set to false for theme compatibility
+    noClasses: false          # Use CSS classes instead of inline styles
+    tabWidth: 4               # Tab width
+  tableOfContents:
+    startLevel: 2 # 从 H2 标题开始包含
+    endLevel: 4   # 包含到 H4 标题
+    ordered: false
+
+outputs:
+  home: ["HTML", "RSS", "JSON", "WebAppManifest"]
+
+# WebManifest
+outputFormats:
+  WebAppManifest:
+    mediaType: "application/manifest+json"
+    baseName: "site"
+    isPlainText: true
+
+menus:
+  main:
+  - name: 文章      # Display name
+    pageRef: /posts      # Page reference
+    weight: 10          # Sort weight
+    params:
+      icon: posts       # Icon name
+  - name: 标签
+    pageRef: /tags
+    weight: 20
+    params:
+      icon: tags
+  - name: 关于我
+    pageRef: /about
+    weight: 30
+    params:
+      icon: about
+  - name: RSS
+    url: /index.xml
+    weight: 40
+    params:
+      icon: rss
+  social:
+  - name: Email
+    url: mailto:alvin.cao@gmail.com
+    weight: 40
+    params:
+      icon: email

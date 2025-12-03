@@ -1,11 +1,19 @@
-+++
-title = '内存模型 3：TSO'
-series = '内存模型'
-date = '2025-03-15'
-keywords = ['计算机原理', '操作系统', '内存模型', '并发', '内存屏障']
-tags = ['工程实践']
-isCJKLanguage = true
-+++
+---
+title: "内存模型 3：TSO"
+date: "2025-03-15"
+keywords:
+- "计算机原理"
+- "操作系统"
+- "内存模型"
+- "并发"
+- "内存屏障"
+tags:
+- "工程实践"
+- "内存模型"
+summary: "TSO 是我们生活中无处不在的 x86 处理器在使用的内存模型"
+katex: true
+cover: "/img/memory_model.png"
+---
 
 ## 介绍
 从[本系列第二篇文章](posts/memory-model/sequential-consistency/)中我们可以看出，SC 这种内存模型，优点是符合直觉，符合直觉非常重要，它意味着写代码不容易犯错。但是，它同时又束缚了处理器设计者的手脚，无法运用可能的优化手段来提升处理器性能。
@@ -58,9 +66,8 @@ S2: y = NEW;
 L3: r3 = y;
 L4: r4 = x;
 ```
-{{< alert "triangle-exclamation" >}}
-程序运行后，有没有可能`(r1, r3) == (NEW, NEW)`且`(r2, r4) == (0, 0)`？
-{{< /alert >}}
+> [!WARNING] 问题
+> 程序运行后，有没有可能`(r1, r3) == (NEW, NEW)`且`(r2, r4) == (0, 0)`？
 
 答案是**有可能**。
 ![](img/tso2.svg)
@@ -79,24 +86,22 @@ bypassing 是符合直觉的，因为我们直观上认为，同一处理器写�
   3. 如果 `S(a) <p L(b)`，则 `S(a) <m L(b)`（`Store -> Store`）
   4. ~~如果 `S(a) <p L(b)`，则 `S(a) <m L(b)`（`Store -> Load`）~~
 
-{{< alert "triangle-exclamation" >}}
-变更一：Write Buffer 效应，使 `Store -> Load` 的顺序无法保证
-{{< /alert >}}
+> [!CAUTION] 结论
+> 变更一：Write Buffer 效应，使 `Store -> Load` 的顺序无法保证
 
 ---
 - 针对同一内存地址，读（`Load`）会得到 `<m` 中最近一次写（`Store`）的值，或者同一处理器上一个尚位于 Write Buffer 中的值：
 ```
 L(a) = Max<m { S(a) | S(a) <m L(a) } 或 S(a) <p L(a)
 ```
-{{< katex >}}
+
 $$
 {L(a) = MAX_{<m} \{ S(a)\ |\ S(a) \text{  <m  } L(a)\} \text{ or } S(a) \text{  <p  } L(a)}
 $$
 
 `S(a) <p L(a)`是指针对同一地址的最新一个写指令。
-{{< alert "triangle-exclamation" >}}
-变更二：对地址`a`的`Load`，要么读到`<m`中的最新值，要么读到`<p`中的最新值，而且后者优先。
-{{< /alert >}}
+> [!CAUTION] 结论
+> 变更二：对地址`a`的`Load`，要么读到`<m`中的最新值，要么读到`<p`中的最新值，而且后者优先。
 
 ---
 - 引入新的`FENCE`指令，其特性满足以下规则：

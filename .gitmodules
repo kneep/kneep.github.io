@@ -2,3 +2,6 @@
 	path = themes/congo
 	url = https://github.com/jpanther/congo.git
 	branch = stable
+[submodule "themes/narrow"]
+	path = themes/narrow
+	url = https://github.com/tom2almighty/hugo-narrow.git
