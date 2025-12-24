@@ -71,7 +71,7 @@ params:
     showOnHomepage: false
     smoothScroll: true
     hideOnComplete: false
-  colorScheme: "claude"
+  colorScheme: "default"
   themes:
     default:
       name: "Default"
