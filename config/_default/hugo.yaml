@@ -14,6 +14,8 @@ enableEmoji: true
 
 enableGitInfo: true
 
+dock: "scroll"
+
 pagination:
   pageSizer: 6
 
@@ -27,18 +29,19 @@ params:
   defaultAuthor: "Alvin Cao"
   language: "zh-Hans"
   shortName: "尼普学种花"
-  logo:
-    image: "/favicon.svg"  # Relative path in static directory, leave empty to use site title"s first letter with theme color
-    link: "/"                  # Click to visit site homepage
-    favicon:
-      svg: "/favicon.svg"        # SVG format favicon
+  header:
+    sticky: true
+    logo:
+      image: "/favicon.svg"  # Relative path in static directory, leave empty to use site title"s first letter with theme color
+      link: "/"                  # Click to visit site homepage
+    showThemeSwitch: true      # Whether to show theme color switch button
+    showDarkModeSwitch: true   # Whether to show dark mode switch button
+    showLanguageSwitch: false   # Whether to show language switch button
+    languageSwitchMode: dropdown # Language switch mode: "dropdown" (show panel) or "cycle" (direct cycle)
+  favicon:
+    svg: "/favicon.svg"        # SVG format favicon
     #images: 
       #- "/images/og-default.avif"  # Default Open Graph image
-  stickyHeader: true  # Sticky navigation bar
-  showThemeSwitch: true      # Whether to show theme color switch button
-  showDarkModeSwitch: true   # Whether to show dark mode switch button
-  showLanguageSwitch: false   # Whether to show language switch button
-  languageSwitchMode: dropdown # Language switch mode: "dropdown" (show panel) or "cycle" (direct cycle)
   author:
     name: "Alvin Cao"
     title: "一个手艺人的自我记录"
@@ -53,13 +56,13 @@ params:
   post:
     showRelated: true           # Related
     relatedPostsCount: 3        # Related posts numbers
-  license:
-    show: true
-    author: Hugo Narrow
-    name: "CC BY-NC-SA 4.0"
-    description: "This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. Please attribute the source, use non-commercially, and maintain the same license."
-    url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
-    displayName: "CC BY-NC-SA 4.0"
+    license:
+      show: true
+      author: Alvin Cao
+      name: "CC BY-NC-SA 4.0"
+      description: "This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. Please attribute the source, use non-commercially, and maintain the same license."
+      url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+      displayName: "CC BY-NC-SA 4.0"
   analytics:
     enabled: true    # Master switch
     google:
@@ -97,6 +100,15 @@ params:
     dracula:
       name: "Dracula"
       order: 8
+    amethyst:
+      name: "Amethyst"
+      order: 9
+    slate:
+      name: "Slate"
+      order: 10
+    twitter:
+      name: "Twitter"
+      order: 11
   codeblock:
     collapse:
       enabled: true
