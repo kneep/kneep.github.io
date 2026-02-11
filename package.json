@@ -1,0 +1,25 @@
+{
+  "name": "kneep-site",
+  "version": "1.0.0",
+  "description": "kneep's site",
+  "scripts": {
+    "build": "./node_modules/.bin/hugo --gc --minify",
+    "postinstall": "git submodule update --init",
+    "dev": "hugo server -D",
+    "clean": "rm -rf public",
+    "preview": "hugo server"
+  },
+  "dependencies": {
+    "hugo-extended": "^0.155.3"
+  },
+  "keywords": [
+    "hugo",
+    "blog",
+    "static-site"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
