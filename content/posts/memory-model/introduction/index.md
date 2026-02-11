@@ -11,7 +11,7 @@ keywords:
 tags:
 - "工程实践"
 - "内存模型"
-cover: "/img/memory_model.png"
+cover: "/img/memory_model.webp"
 ---
 
 在讨论编程问题，尤其是在并发编程领域时，我们经常会遇到「内存模型」这个词，其英文通常为 "Memory Model" 或 "Memory Consistency Model"。理解「内存模型」的含义对于编写高效、稳定的计算机程序至关重要，但这并非易事。本系列文章旨在深入浅出地解释「内存模型」这一概念，特别是帮助嵌入式开发领域的软件工程师理解并掌握工作中必备的相关知识。

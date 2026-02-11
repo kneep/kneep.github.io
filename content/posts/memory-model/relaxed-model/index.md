@@ -12,7 +12,7 @@ tags:
 - "内存模型"
 summary: "嵌入式领域中占主导地位的 ARMv8 处理器使用了一种限制更少的内存模型"
 katex: true
-cover: "/img/memory_model.png"
+cover: "/img/memory_model.webp"
 ---
 
 ## 介绍

@@ -12,7 +12,7 @@ tags:
 - "内存模型"
 summary: "SC 是最直观、最符合直觉的内存模型，是理解其他模型的基础"
 katex: true
-cover: "/img/memory_model.png"
+cover: "/img/memory_model.webp"
 ---
 
 本文介绍第一种内存模型 SC，它是最符合直觉的内存模型，也是理解其他模型的基础。

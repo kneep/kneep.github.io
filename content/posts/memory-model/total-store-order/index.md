@@ -12,7 +12,7 @@ tags:
 - "内存模型"
 summary: "TSO 是我们生活中无处不在的 x86 处理器在使用的内存模型"
 katex: true
-cover: "/img/memory_model.png"
+cover: "/img/memory_model.webp"
 ---
 
 ## 介绍
