@@ -116,6 +116,21 @@ params:
       autoCollapseLines: 30   # Collapse when exceeding specified lines
       autoCollapseHeight: 400  # Collapse when exceeding specified height
       collapsedHeight: 120    # Height when collapsed
+  gallery:
+    enabled: true
+    defaultLayout: justified # justified, masonry, grid
+    gap: 10
+    targetRowHeight: 200
+    lastRowBehavior: center # left, center, right, fill, hide
+    columnWidth: 200
+    columns: 4 # auto 或具体数字
+    # PhotoSwipe 灯箱
+  lightbox:
+    enabled: true
+    bgOpacity: 0.8
+    showHideAnimationType: zoom
+    showAnimationDuration: 333
+    hideAnimationDuration: 333
 
 katex:
   enable: true
