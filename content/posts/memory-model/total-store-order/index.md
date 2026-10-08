@@ -1,5 +1,5 @@
 ---
-title: "内存模型 3：TSO"
+title: "TSO 内存模型：写缓冲、写读乱序与 Bypassing"
 date: "2025-03-15"
 keywords:
 - "计算机原理"
@@ -10,16 +10,20 @@ keywords:
 tags:
 - "工程实践"
 - "内存模型"
-summary: "TSO 是我们生活中无处不在的 x86 处理器在使用的内存模型"
+series: ["内存模型"]
+series_order: 3
+summary: "从写缓冲出发，理解 x86 TSO 允许的写读乱序和 Bypassing"
+description: "通过 Write Buffer 场景解释 Total Store Order（TSO）内存模型，分析 Store→Load 乱序、Bypassing，以及它与顺序一致性 SC 的区别。"
 katex: true
 cover: "/img/memory_model.webp"
+images: ["/img/memory_model.webp"]
 ---
 
 ## 介绍
-从[本系列第二篇文章](posts/memory-model/sequential-consistency/)中我们可以看出，SC 这种内存模型，优点是符合直觉，符合直觉非常重要，它意味着写代码不容易犯错。但是，它同时又束缚了处理器设计者的手脚，无法运用可能的优化手段来提升处理器性能。
+从[本系列第二篇文章]({{< relref "/posts/memory-model/sequential-consistency" >}})中我们可以看出，SC 这种内存模型，优点是符合直觉，符合直觉非常重要，它意味着写代码不容易犯错。但是，它同时又束缚了处理器设计者的手脚，无法运用可能的优化手段来提升处理器性能。
 
 本文中，我们来给 SC 稍微松松绑。什么情况下需要松绑呢？先来看下面的场景。
-![](img/tso1.svg)
+![处理器通过 Write Buffer 写入缓存一致性内存系统](img/tso1.svg)
 
 在这个场景中，core 0 将数据写入内存中，core 1 将数据从内存中读出。略有不同的是，在 core 0 和内存之间加了一个 write buffer。为什么要加这个缓冲？我们可以注意到，图中的内存系统写的是 Cache-Coherent Memory System，因为缓存的存在，多核处理器的缓存之间需要通过某种协议来确保**所有处理器通过缓存看到的内存内容是一致且有效的**，只有被写的地址的内容出于缓存一致（Cache-Coherent）的状态，写指令才能被执行。而实施这种缓存一致性协议是需要花费时间的，所以写指令经常需要等待。加了这个缓冲，处理器可以先把写指令提交到缓存中，等到它对应的地址处于一致状态时，再把写指令取出执行，提升了写的性能。
 
@@ -33,7 +37,7 @@ Total Store Order（TSO），我们要介绍的第二种内存模型，它和 SC
 因为 TSO 的大部分特性和 SC 相同，我们仅仅讨论差别的两个特性：写读乱序、bypassing。
 
 ### 场景一
-写读乱序我们继续使用[本系列第二篇文章](posts/memory-model/sequential-consistency/)中的例子，再次把伪代码列如下：
+写读乱序我们继续使用[本系列第二篇文章]({{< relref "/posts/memory-model/sequential-consistency" >}})中的例子，再次把伪代码列如下：
 ```c
 // Core C1
 S1: x = NEW;
@@ -46,7 +50,7 @@ S2: y = NEW;
 L2: r2 = x;
 ```
 在场景四中，我们构造了如下的执行序列：
-![](img/sc4.svg)
+![在 TSO 中允许出现的 Store Load 乱序执行场景](img/sc4.svg)
 我们之前提到，因为`S2 <p L2`，但是同时`L2 <m S2`，所以它是不符合 SC 的。它造成了`(r1, r2) == (0, 0)`这个非常不符合直觉的结果。
 
 现在我们知道它的出处了，它就是我们上面分析的 write buffer 的场景，虽然不符合 SC，但它是符合 TSO 的。`S2: y = NEW;`这个写操作虽然是最早发生（更准确地应该称为「提交」），但因为 write buffer 的存在，它的生效发生了延迟。
@@ -70,7 +74,7 @@ L4: r4 = x;
 > 程序运行后，有没有可能`(r1, r3) == (NEW, NEW)`且`(r2, r4) == (0, 0)`？
 
 答案是**有可能**。
-![](img/tso2.svg)
+![TSO 中两个处理器发生 Bypassing 的执行序列](img/tso2.svg)
 
 从这个执行序列可以看出，`r1`能得到`NEW`值，哪怕`NEW`尚未实际进入`x`的内存位置，原因就是这两条指令操作的是同一地址，存在 bypassing 效应，红点即为 bypassing 发生处。同理`r3`也一样。
 

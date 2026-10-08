@@ -1,5 +1,5 @@
 ---
-title: "内存模型 4：宽松模型"
+title: "ARMv8 宽松内存模型：允许哪些指令重排"
 date: "2025-09-01"
 keywords:
 - "计算机原理"
@@ -10,9 +10,13 @@ keywords:
 tags:
 - "工程实践"
 - "内存模型"
-summary: "嵌入式领域中占主导地位的 ARMv8 处理器使用了一种限制更少的内存模型"
+series: ["内存模型"]
+series_order: 4
+summary: "从具体执行场景理解 ARMv8 宽松内存模型允许的指令重排"
+description: "介绍 ARMv8 使用的宽松内存模型，通过多核读写场景说明它相对 SC 和 TSO 放宽了哪些顺序约束，以及程序员需要注意什么。"
 katex: true
 cover: "/img/memory_model.webp"
+images: ["/img/memory_model.webp"]
 ---
 
 ## 介绍
@@ -58,7 +62,7 @@ L2: r2 = data1;
 L3: r3 = data2;
 ```
 
-![](img/rmc1.svg)
+![宽松内存模型中允许多种指令重排的执行场景](img/rmc1.svg)
 
 ## 形式化定义
 先来定义`FENCE`，和 TSO 是一样的：

@@ -4,7 +4,7 @@ theme: "narrow"
 
 enableRobotsTXT: true
 
-languageCode: "zh-Hans"
+locale: "zh-Hans"
 defaultContentLanguage: "zh-cn"
 
 timeZone: "Asia/Shanghai"
@@ -22,6 +22,7 @@ pagination:
 taxonomies:
   category: categories
   tag: tags
+  series: series
 
 params:
   description: "种花、旅行、写代码"
@@ -40,7 +41,7 @@ params:
     languageSwitchMode: dropdown # Language switch mode: "dropdown" (show panel) or "cycle" (direct cycle)
   favicon:
     svg: "/favicon.svg"        # SVG format favicon
-    #images: 
+    #images:
       #- "/images/og-default.avif"  # Default Open Graph image
   author:
     name: "Alvin Cao"
@@ -141,7 +142,7 @@ katex:
   - left: $
     right: $
     display: false
-      
+
 markup:
   highlight:
     codeFences: true           # Enable code fences

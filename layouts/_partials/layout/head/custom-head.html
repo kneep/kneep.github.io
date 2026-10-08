@@ -1,0 +1,47 @@
+{{- $page := . -}}
+{{- if .IsHome -}}
+  {{- $website := dict
+    "@context" "https://schema.org"
+    "@type" "WebSite"
+    "name" site.Title
+    "url" site.BaseURL
+  -}}
+  <script type="application/ld+json">{{ $website | jsonify | safeJS }}</script>
+{{- else if and .IsPage (eq .Section "posts") -}}
+  {{- $description := .Description | default .Params.summary | default .Summary | plainify | strings.TrimSpace -}}
+  {{- $authorName := .Params.author | default site.Params.defaultAuthor -}}
+  {{- $imageURLs := slice -}}
+  {{- range (.Params.images | default (slice .Params.cover)) -}}
+    {{- $src := printf "%v" . -}}
+    {{- if $src -}}
+      {{- $resolved := "" -}}
+      {{- if or (hasPrefix $src "http://") (hasPrefix $src "https://") -}}
+        {{- $resolved = $src -}}
+      {{- else if hasPrefix $src "/" -}}
+        {{- $resolved = strings.TrimPrefix "/" $src | absURL -}}
+      {{- else -}}
+        {{- with $page.Resources.GetMatch $src -}}
+          {{- $resolved = .Permalink -}}
+        {{- else -}}
+          {{- $resolved = urls.JoinPath $page.Permalink $src -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $imageURLs = $imageURLs | append $resolved -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $article := dict
+    "@context" "https://schema.org"
+    "@type" "BlogPosting"
+    "headline" .Title
+    "description" $description
+    "url" .Permalink
+    "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+    "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+    "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+    "author" (dict "@type" "Person" "name" $authorName "url" ("about/" | absURL))
+  -}}
+  {{- if $imageURLs -}}
+    {{- $article = merge $article (dict "image" $imageURLs) -}}
+  {{- end -}}
+  <script type="application/ld+json">{{ $article | jsonify | safeJS }}</script>
+{{- end -}}

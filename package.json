@@ -10,7 +10,7 @@
     "preview": "hugo server"
   },
   "dependencies": {
-    "hugo-extended": "^0.157.0"
+    "hugo-extended": "^0.167.0"
   },
   "keywords": [
     "hugo",

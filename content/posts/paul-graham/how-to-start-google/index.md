@@ -1,10 +1,12 @@
 ---
 title: "Paul Graham：如何创立谷歌那样的公司"
 summary: "Paul Graham 给孩子们的创业建议"
+description: "Paul Graham 演讲《How to Start Google》的中文翻译：年轻人如何通过个人项目掌握技术、发现创业想法，并找到合适的创业伙伴。"
 date: "2024-04-29"
 keywords: ["Paul Graham", "创业", "编程"]
 tags: ["译文"]
 cover: "img/google.png"
+images: ["img/google.png"]
 ---
 
 原文地址：https://www.paulgraham.com/google.html
